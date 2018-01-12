@@ -22,19 +22,17 @@ def isSolvable(nums):
     """Determines if an input list of numbers can be used to make 24."""
     length = len(nums)
     if length < 1:
-        return False # This should not 
+        return False # This should not
     if length == 1:
         return nums[0] == 24 # Base case
     # Will only continue if there are 2 or more numbers
     funcs = [add, sub, mult, div]
     for i in range(length):
-        for j in range(1,length):
-            # Create a deepcopy of the available numbers with two missing
+        for j in range(i+1,length):
             firstNum = nums[i]
             secondNum = nums[j]
-            numsCopy = deepcopy(nums)
-            numsCopy.remove(firstNum)
-            numsCopy.remove(secondNum)
+            # Create a copy of the available numbers with two missing
+            numsCopy = nums[:i] + nums[i+1:j] + nums[j+1:]
             # Permute the result
             for f in funcs:
                 optionA = f(firstNum, secondNum)
@@ -45,11 +43,3 @@ def isSolvable(nums):
                     return True
     # Will only continue if no solution was found
     return False
-                
-
-
-
-
-
-
-                
